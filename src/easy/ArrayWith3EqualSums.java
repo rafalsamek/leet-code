@@ -55,13 +55,13 @@ public class ArrayWith3EqualSums {
 
         // check if first partition possible if not output false and return
         if (ArrayWith3EqualSums.isPartitionPossible(array, partSum)) {
-            System.out.println("first partition: false");
+            System.out.println("false");
             return;
         }
 
         // check if second partition possible if not output false and return
         if (ArrayWith3EqualSums.isPartitionPossible(array, 2 * partSum)) {
-            System.out.println("second partition: false");
+            System.out.println("false");
             return;
         }
 
