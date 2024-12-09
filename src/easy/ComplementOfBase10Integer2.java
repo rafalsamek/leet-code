@@ -34,14 +34,13 @@ package easy;
  *
  * 0 <= n < 109
  */
-public class ComplementOfBase10Integer {
+public class ComplementOfBase10Integer2 {
     public static void main(String[] args) {
         int decimalNumber = Integer.parseInt(args[0]);
 
         // check constraints
-        ComplementOfBase10Integer.checkConstraints(decimalNumber);
-
-        System.out.println("decimal representation of the binary compement of the number: " + ComplementOfBase10Integer.complement(decimalNumber));
+        ComplementOfBase10Integer2.checkConstraints(decimalNumber);
+        System.out.println(bitwiseComplement(decimalNumber));
     }
 
     private static void checkConstraints(int decimalNumber) {
@@ -56,27 +55,13 @@ public class ComplementOfBase10Integer {
         }
     }
 
-    private static int complement(int decimalNumber) {
-        System.out.println("provided number: " + decimalNumber);
+    public static int bitwiseComplement(int n) {
+        if (n == 0) return 1; // Special case for 0, as its complement is 1
 
-        int decimalComplement = 0;
-        // convert to binary
-        String binaryNumber = Integer.toBinaryString(decimalNumber);
-        System.out.println("binary representation of the number: " + binaryNumber);
+        // Create a mask with all bits set to 1 for the length of n's binary representation
+        int mask = (Integer.highestOneBit(n) << 1) - 1;
 
-        // convert to complement
-        String complementBinary = "";
-        for (int i = 0; i < binaryNumber.length(); i++) {
-            complementBinary += binaryNumber.charAt(i) == '0' ? '1' : '0';
-        }
-        System.out.println("binary complement of the number: " + complementBinary);
-
-        // convert to decimal
-        for (int i = 0; i < complementBinary.length(); i++) {
-            int weight = (int) Math.pow(2, complementBinary.length() - 1 - i);
-            decimalComplement += complementBinary.charAt(i) == '1' ? weight : 0;
-        }
-
-        return decimalComplement;
+        // XOR n with the mask to get the complement
+        return n ^ mask;
     }
 }
