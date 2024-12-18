@@ -3,8 +3,6 @@ package easy;
 import java.awt.*;
 import java.util.Arrays;
 
-import static java.lang.System.exit;
-
 /**
  * 1037. Valid Boomerang
  * Easy
