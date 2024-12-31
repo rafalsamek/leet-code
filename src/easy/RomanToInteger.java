@@ -1,6 +1,6 @@
 package easy;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * 13. Roman to Integer
@@ -54,57 +54,108 @@ import java.util.ArrayList;
  */
 public class RomanToInteger {
     private static final String ROMAN_CHARS = "IVXLCDM";
+
+    private static final Map<String, Integer> ROMAN_DIGITS = new HashMap<>() {{
+        put("I", 1);
+        put("IV", 4);
+        put("V", 5);
+        put("IX", 9);
+        put("X", 10);
+        put("XL", 40);
+        put("L", 50);
+        put("XC", 90);
+        put("C", 100);
+        put("CD", 400);
+        put("D", 500);
+        put("CM", 900);
+        put("M", 1000);
+    }};
+
+    private static final List<Integer> ROMAN_DIGITS_CAN_BE_TRIPLED = Arrays.asList(
+            1,
+            10,
+            100,
+            1000
+    );
+
+    private static final HashMap<Integer, Integer> DIGIT_WEIGHTS = new HashMap<>() {{
+        put(1, 1);
+        put(4, 1);
+        put(5, 1);
+        put(9, 1);
+        put(10, 10);
+        put(40, 10);
+        put(50, 10);
+        put(90, 10);
+        put(100, 100);
+        put(400, 100);
+        put(500, 100);
+        put(900, 100);
+        put(1000, 1000);
+    }};
+
     public static void main(String[] args) {
         String s = args[0];
         checkConstraints(s);
-        checkIsValidRomanNumber(s);
         System.out.println(convertRomanNumberToInteger(s));
     }
 
     private static void checkConstraints(String s) {
-        // TODO 1 <= s.length <= 15
+        if (s.isEmpty() || s.length() > 15) {
+            throw new IllegalArgumentException("Length must be between 1 and 15");
+        }
+
         for (int i = 0; i < s.length(); i++) {
             if (ROMAN_CHARS.indexOf(s.charAt(i)) == -1) {
                 throw new IllegalArgumentException("Illegal character: " + s.charAt(i));
             }
         }
-        // TODO check that s is a valid roman numeral in the range [1, 3999]
+        //  It is guaranteed that s is a valid roman numeral in the range [1, 3999].
+        //  The greatest valid number with IVXLCDM chars is 3999
     }
 
-    private static void checkIsValidRomanNumber(String s) {
+    private static int convertRomanNumberToInteger(String s) {
+        List<Integer> romanNumberInDigits = new ArrayList<>();
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == 'I') {
-                if (
-                        (i < s.length() - 1 && s.charAt(i + 1) != 'V' && s.charAt(i + 1) != 'X' && s.charAt(i + 1) != 'I') ||
-                                (i > 2 && s.charAt(i -3) == 'I' && s.charAt(i -2) == 'I' && s.charAt(i -1) == 'I') ||
-                                (i > 0 && i + 1 < s.length() && s.charAt(i - 1) == 'I' && (s.charAt(i + 1) == 'V' || s.charAt(i + 1) == 'X'))
-                ) {
-                    throw new IllegalArgumentException("Not a valid roman number: " + s + " on position " + i);
-                }
+            if (i + 1 < s.length() && ROMAN_DIGITS.containsKey(s.substring(i, i + 2))) {
+                romanNumberInDigits.add(ROMAN_DIGITS.get(s.substring(i, i + 2)));
+                i++;
+                continue;
             }
-            if (s.charAt(i) == 'X') {
-                if (
-                        (i < s.length() - 1 && s.charAt(i + 1) != 'L' && s.charAt(i + 1) != 'C' && s.charAt(i + 1) != 'X' && s.charAt(i + 1) != 'V' && s.charAt(i + 1) != 'I') ||
-                                (i > 2 && s.charAt(i -3) == 'X' && s.charAt(i -2) == 'X' && s.charAt(i -1) == 'X') ||
-                                (i > 0 && i + 1 < s.length() && s.charAt(i - 1) == 'X' && (s.charAt(i + 1) == 'L' || s.charAt(i + 1) == 'C'))
-                ) {
-                    throw new IllegalArgumentException("Not a valid roman number: " + s + " on position " + i);
-                }
+            if (ROMAN_DIGITS.containsKey(s.substring(i, i + 1))) {
+                romanNumberInDigits.add(ROMAN_DIGITS.get(s.substring(i, i + 1)));
+                continue;
             }
-            if (s.charAt(i) == 'C') {
-                if (
-                        (i < s.length() - 1 && s.charAt(i + 1) != 'D' && s.charAt(i + 1) != 'M' && s.charAt(i + 1) != 'C' && s.charAt(i + 1) != 'L' && s.charAt(i + 1) != 'X' && s.charAt(i + 1) != 'V' && s.charAt(i + 1) != 'I') ||
-                                (i > 2 && s.charAt(i -3) == 'C' && s.charAt(i -2) == 'C' && s.charAt(i -1) == 'C') ||
-                                (i > 0 && i + 1 < s.length() && s.charAt(i - 1) == 'C' && (s.charAt(i + 1) == 'M' || s.charAt(i + 1) == 'D'))
+            throw new IllegalArgumentException("Illegal character: " + s.charAt(i));
+        }
+
+        for (int i = 0; i < romanNumberInDigits.size(); i++) {
+            if (i + 1 < romanNumberInDigits.size() && romanNumberInDigits.get(i) < romanNumberInDigits.get(i + 1)) {
+                throw new IllegalArgumentException("Invalid roman number!");
+            }
+            if (ROMAN_DIGITS_CAN_BE_TRIPLED.contains(romanNumberInDigits.get(i))) {
+                if (i + 3 < romanNumberInDigits.size()
+                        && Objects.equals(romanNumberInDigits.get(i), romanNumberInDigits.get(i + 1))
+                        && Objects.equals(romanNumberInDigits.get(i + 1), romanNumberInDigits.get(i + 2))
+                        && Objects.equals(romanNumberInDigits.get(i + 2), romanNumberInDigits.get(i + 3))
                 ) {
-                    throw new IllegalArgumentException("Not a valid roman number: " + s + " on position " + i);
+                    throw new IllegalArgumentException("Invalid roman number!");
+                }
+            } else {
+                if (i + 1 < romanNumberInDigits.size() && Objects.equals(
+                        DIGIT_WEIGHTS.get(romanNumberInDigits.get(i)),
+                        DIGIT_WEIGHTS.get(romanNumberInDigits.get(i + 1))
+                )) {
+                    throw new IllegalArgumentException("Invalid roman number!");
                 }
             }
         }
-    }
 
+        int decimalNumber = 0;
+        for (int digit : romanNumberInDigits) {
+            decimalNumber += digit;
+        }
 
-    private static int convertRomanNumberToInteger(String s) {
-        return 943;
+        return decimalNumber;
     }
 }
