@@ -3,8 +3,6 @@ package easy;
 import java.awt.*;
 import java.util.Arrays;
 
-import static java.lang.System.exit;
-
 /**
  * 1037. Valid Boomerang
  * Easy
@@ -107,6 +105,21 @@ public class ValidBoomerang {
     }
 
     private static void checkConstraints(Point[] input) {
+        if (input.length != 3) {
+            throw new IllegalArgumentException("points.length == 3");
+        }
+
+        for (int i = 0; i < input.length; i++) {
+            if (!(input[i] instanceof Point)) {
+                throw new IllegalArgumentException("points[i].length == 2");
+            }
+        }
+
+        for (int i = 0; i < input.length; i++) {
+            if (input[i].getX() < 0 || input[i].getX() > 100 || input[i].getY() < 0 || input[i].getY() > 100) {
+                throw new IllegalArgumentException("0 <= xi, yi <= 100");
+            }
+        }
     }
 
     private static class Matrix {
