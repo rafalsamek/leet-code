@@ -54,30 +54,57 @@ public class RemoveElement {
     public static void main(String[] args) {
         int[] nums = convertArgsToIntArray(args);
         int val = convertArgsToIntVal(args);
-        checkConstraints(nums);
+        checkConstraints(nums, val);
         System.out.println("Input: nums = " + Arrays.toString(nums) + ", val = " + val);
         int k = removeElements(val, nums);
         System.out.println("Output: " + k + ", nums = " + Arrays.toString(nums));
     }
 
     private static int[] convertArgsToIntArray(String[] args) {
-        int[] array = {};
+        int[] array = new int[args.length - 1];
+        for (int i = 0; i < args.length - 1; i++) {
+            array[i] = Integer.parseInt(args[i]);
+        }
 
         return array;
     }
 
     private static int convertArgsToIntVal(String[] args) {
-        int val = 0;
-
-        return val;
+        return Integer.parseInt(args[args.length - 1]);
     }
 
-    private static void checkConstraints(int[] nums) {
+    private static void checkConstraints(int[] nums, int val) {
+        if (nums.length > 100) {
+            throw new IllegalArgumentException("0 <= nums.length <= 100");
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < 0 || nums[i] > 50) {
+                throw new IllegalArgumentException("0 <= nums[i] <= 50");
+            }
+        }
+        if (val < 0 || val > 100) {
+            throw new IllegalArgumentException("0 <= val <= 100");
+        }
     }
 
     private static int removeElements(int val, int[] nums) {
-        int k = 0;
+        int goodCounter = 0;
+        int badCounter = 0;
 
-        return k;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == val && i < nums.length - badCounter) {
+                for (int j = i; j < nums.length - 1 - badCounter; j++) {
+                    nums[j] = nums[j + 1];
+                }
+                nums[nums.length - 1 - badCounter] = -1;
+                badCounter++;
+                i--;
+                goodCounter--;
+                continue;
+            }
+            goodCounter++;
+        }
+
+        return goodCounter;
     }
 }
