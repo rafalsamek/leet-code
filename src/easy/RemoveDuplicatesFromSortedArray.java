@@ -1,5 +1,7 @@
 package easy;
 
+import java.util.Arrays;
+
 /**
  * 26. Remove Duplicates from Sorted Array
  * Easy
@@ -50,4 +52,57 @@ package easy;
  * nums is sorted in non-decreasing order.
  */
 public class RemoveDuplicatesFromSortedArray {
+    public static void main(String[] args) {
+        int[] nums = convertArrayToIntArray(args);
+        checkConstraints(nums);
+        System.out.println("Input: nums = " + Arrays.toString(nums));
+        int goodCounter = removeDuplicates(nums);
+        System.out.println("Output: " + goodCounter + " , nums = " + Arrays.toString(nums));
+    }
+
+    private static int removeDuplicates(int[] nums) {
+        int goodCounter = 0;
+        int badCounter = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0  && nums[i] != -1 && nums[i] == nums[i - 1]) {
+                for (int j = i; j < nums.length - 1 - badCounter; j++) {
+                    nums[j] = nums[j + 1];
+                }
+                nums[nums.length - 1 - badCounter] = -1;
+                badCounter++;
+                i--;
+                goodCounter--;
+                continue;
+            }
+            goodCounter++;
+        }
+
+        return goodCounter;
+    }
+
+    private static void checkConstraints(int[] nums) {
+        if (nums.length < 1 || nums.length > 3 * 104) {
+            throw new IllegalArgumentException("1 <= nums.length <= 3 * 104");
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < -100 || nums[i] > 100) {
+                throw new IllegalArgumentException("-100 <= nums[i] <= 100");
+            }
+
+            if (i > 0 && nums[i] < nums[i - 1]) {
+                throw new IllegalArgumentException("nums should be sorted in non-decreasing order");
+            }
+        }
+    }
+
+    private static int[] convertArrayToIntArray(String[] array) {
+        int[] intArray = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            intArray[i] = Integer.parseInt(array[i]);
+        }
+
+        return intArray;
+    }
 }
