@@ -32,22 +32,31 @@ package easy;
  *
  * Constraints:
  *
- * 1 <= s.length <= 104
+ * 1 <= s.length <= 10^4
  * s consists of only English letters and spaces ' '.
  * There will be at least one word in s.
  */
 public class LengthOfLastWord {
     public static void main(String[] args) {
-        String s = "Hello World";
-
+        String s = "1a";
         checkConstraints(s);
         System.out.println("Input: s = \"" + s + "\"");
         int lastWordLength = calculateLastWordLength(s);
         System.out.println("Output: " + lastWordLength);
-
     }
 
     private static void checkConstraints(String s) {
+        if (s.isEmpty() || s.length() > 10000) {
+            throw new IllegalArgumentException("1 <= s.length <= 10^4");
+        }
+
+        if (!s.matches("[a-zA-Z\\s]*")) {
+            throw new IllegalArgumentException("s should consist of only English letters and spaces ' '");
+        }
+
+        if (!s.matches("(.*)[A-Za-z]+(.*)")) {
+            throw new IllegalArgumentException("There should be at least one word in s");
+        }
     }
 
     private static int calculateLastWordLength(String s) {
