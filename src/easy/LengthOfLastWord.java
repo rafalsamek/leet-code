@@ -42,8 +42,8 @@ public class LengthOfLastWord {
 
         checkConstraints(s);
         System.out.println("Input: s = \"" + s + "\"");
-        int lengthLastWord = calculateLastWordLength(s);
-        System.out.println("Output: " + lengthLastWord);
+        int lastWordLength = calculateLastWordLength(s);
+        System.out.println("Output: " + lastWordLength);
 
     }
 
@@ -53,6 +53,6 @@ public class LengthOfLastWord {
     private static int calculateLastWordLength(String s) {
         String[] words = s.split(" ");
 
-        return 0;
+        return words[words.length -1].length();
     }
 }
