@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.SortedMap;
+package easy;
 
 /**
  * 58. Length of Last Word
@@ -53,7 +52,6 @@ public class LengthOfLastWord {
 
     private static int calculateLastWordLength(String s) {
         String[] words = s.split(" ");
-
 
         return 0;
     }
