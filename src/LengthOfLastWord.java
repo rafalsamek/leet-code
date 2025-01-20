@@ -39,15 +39,22 @@ import java.util.SortedMap;
  */
 public class LengthOfLastWord {
     public static void main(String[] args) {
-        for (String arg : args) {
-            String[] s = arg.split("\\s+");
-        }
-        checkConstraints(args);
-        System.out.println("Input: s = \"" + Arrays.toString(args) + "\"");
-        System.out.println("Output: " );
+        String s = "Hello World";
+
+        checkConstraints(s);
+        System.out.println("Input: s = \"" + s + "\"");
+        int lengthLastWord = calculateLastWordLength(s);
+        System.out.println("Output: " + lengthLastWord);
 
     }
 
-    private static void checkConstraints(String[] args) {
+    private static void checkConstraints(String s) {
+    }
+
+    private static int calculateLastWordLength(String s) {
+        String[] words = s.split(" ");
+
+
+        return 0;
     }
 }
