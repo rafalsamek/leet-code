@@ -38,7 +38,7 @@ package easy;
  */
 public class LengthOfLastWord {
     public static void main(String[] args) {
-        String s = "1a";
+        String s = "Hello World";
         checkConstraints(s);
         System.out.println("Input: s = \"" + s + "\"");
         int lastWordLength = calculateLastWordLength(s);
