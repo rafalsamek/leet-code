@@ -62,11 +62,11 @@ public class PlusOne {
         if (digits.length < 1 || digits.length > 100) {
             throw new IllegalArgumentException("1 <= digits.length <= 100");
         }
-        for (int i = 0; i < digits.length; i++) {
-            if (digits[i] < 0 || digits[i] > 9) {
+        for (int digit : digits) {
+            if (digit < 0 || digit > 9) {
                 throw new IllegalArgumentException("0 <= digits[i] <= 9");
             }
-            if (digits[0] ==0) {
+            if (digits[0] == 0) {
                 throw new IllegalArgumentException("digits should not contain any leading 0's");
             }
         }
