@@ -42,7 +42,10 @@ class SolutionTest {
                 new Object[]{ new int[]{2,4,3}, new int[]{5,6,4}, new int[]{7,0,8} },
 
                 // Example 2: l1 = [0], l2 = [0] => output = [0]
-                new Object[]{ new int[]{0},      new int[]{0},      new int[]{0} }
+                new Object[]{ new int[]{0},      new int[]{0},      new int[]{0} },
+
+                // Example 3: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9] => output = [8,9,9,9,0,0,0,1]
+                new Object[]{ new int[]{9,9,9,9,9,9,9},      new int[]{9,9,9,9},      new int[]{8,9,9,9,0,0,0,1} }
         );
     }
 
