@@ -1,5 +1,7 @@
 package medium.AddTwoNumbers;
 
+import java.math.BigInteger;
+
 /**
  * 2. Add Two Numbers
  * Medium
@@ -47,10 +49,10 @@ package medium.AddTwoNumbers;
 public class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         checkConstraints(l1, l2);
-        int i1 = convertListNodeToInt(l1);
-        int i2 = convertListNodeToInt(l2);
+        BigInteger i1 = convertListNodeToInt(l1);
+        BigInteger i2 = convertListNodeToInt(l2);
 
-        return convertIntToListNode(i1 + i2);
+        return convertIntToListNode(i1.add(i2));
     }
 
     private void checkConstraints(ListNode l1, ListNode l2) {
@@ -77,7 +79,7 @@ public class Solution {
         }
 
         String intNumberString1 = intNumber.reverse().toString();
-        String intNumberString2 = String.valueOf(Integer.parseInt(intNumberString1));
+        String intNumberString2 = String.valueOf(new BigInteger(intNumberString1));
 
         if (intNumberString1.length() != intNumberString2.length()) {
             throw new IllegalArgumentException(
@@ -107,17 +109,17 @@ public class Solution {
         return numberOfNodes;
     }
 
-    private int convertListNodeToInt(ListNode listNode) {
+    private BigInteger convertListNodeToInt(ListNode listNode) {
         StringBuilder intNumber = new StringBuilder();
         while (listNode != null) {
             intNumber.append(listNode.val);
             listNode = listNode.next;
         }
 
-        return Integer.parseInt(intNumber.reverse().toString());
+        return new BigInteger(intNumber.reverse().toString());
     }
 
-    private ListNode convertIntToListNode(int intNumber) {
+    private ListNode convertIntToListNode(BigInteger intNumber) {
         String intNumberString = new StringBuilder(String.valueOf(intNumber)).reverse().toString();
         ListNode listNode = new ListNode();
         ListNode head = listNode;
